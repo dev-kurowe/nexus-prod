@@ -30,7 +30,8 @@ func main() {
 	fmt.Printf("📍 API Base URL: http://localhost:%s/api\n", port)
 	fmt.Printf("========================================\n\n")
 
-	if err := r.Run(":" + port); err != nil {
+	// Bind to 0.0.0.0 to accept connections from all interfaces (required for Kubernetes)
+	if err := r.Run("0.0.0.0:" + port); err != nil {
 		log.Fatal("Gagal menjalankan server:", err)
 	}
 }

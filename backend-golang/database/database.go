@@ -155,3 +155,8 @@ func InitDB() {
 
 	fmt.Println("Database migrated successfully!")
 }
+
+// GetDB returns the database instance
+func GetDB() *gorm.DB {
+	return DB
+}
