@@ -3,33 +3,34 @@ package main
 import (
 	"fmt"
 	"log"
-	"os"
-	"santrikoding/backend-api/config"
+
+	// "os" // <-- Hapus ini kalau tidak dipakai (karena kita hardcode port)
+	// "santrikoding/backend-api/config" <-- HAPUS INI (Penyebab Crash)
 	"santrikoding/backend-api/database"
 	"santrikoding/backend-api/routes"
 )
 
 func main() {
 
-	//load config .envs
-	config.LoadEnv()
+	// ❌ HAPUS BARIS INI: config.LoadEnv()
+	// Di Cloud, Environment Variable otomatis terbaca dari sistem,
+	// tidak perlu load file .env lagi. Kalau dipaksa, malah error.
 
-	//inisialisasi database
+	// 1. Inisialisasi database
 	database.InitDB()
 
-	//setup router
+	// 2. Setup router
 	r := routes.SetupRouter()
 
-	//mulai server
-	port := os.Getenv("APP_PORT")
-	if port == "" {
-		port = "8080"
-	}
+	// 3. Mulai server (LANGSUNG TEMBAK PORT 8080)
+	// Kita hardcode biar DigitalOcean senang dan tidak salah sambung lagi.
+	port := "8080"
+
 	fmt.Printf("\n========================================\n")
 	fmt.Printf("🚀 Server berjalan di port: %s\n", port)
-	fmt.Printf("📍 API Base URL: http://localhost:%s/api\n", port)
 	fmt.Printf("========================================\n\n")
 
+	// Pastikan titik dua (:) ada di depan port
 	if err := r.Run(":" + port); err != nil {
 		log.Fatal("Gagal menjalankan server:", err)
 	}
