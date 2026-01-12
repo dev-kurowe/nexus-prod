@@ -1,8 +1,12 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
+const baseURL = import.meta.env.VITE_API_URL 
+  ? `${import.meta.env.VITE_API_URL}/api` 
+  : 'http://localhost:8000/api';
+
 const api = axios.create({
-  baseURL: 'http://localhost:8000/api', 
+  baseURL: baseURL, 
   headers: {
     'Content-Type': 'application/json',
     'Accept': 'application/json',
@@ -12,7 +16,6 @@ const api = axios.create({
 api.interceptors.request.use((config) => {
   const token = Cookies.get('token'); 
   
-  // Endpoint yang tidak memerlukan token (public endpoints)
   const publicEndpoints = ['/login', '/register', '/events'];
   const isPublicEndpoint = publicEndpoints.some(endpoint => 
     config.url?.includes(endpoint)
@@ -21,7 +24,6 @@ api.interceptors.request.use((config) => {
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   } else if (!isPublicEndpoint) {
-    // Hanya tampilkan warning untuk endpoint yang memerlukan token
     console.warn("PERINGATAN: Tidak ada token! Request mungkin akan 401.");
   }
 
