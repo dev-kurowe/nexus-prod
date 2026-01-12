@@ -16,10 +16,17 @@ func SetupRouter() *gin.Engine {
 
 	// set up CORS
 	router.Use(cors.New(cors.Config{
-		AllowOrigins:  []string{"*"},
-		AllowMethods:  []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
-		AllowHeaders:  []string{"Origin", "Content-Type", "Authorization"},
-		ExposeHeaders: []string{"Content-Length"},
+		AllowOrigins: []string{
+			"http://localhost:3000",
+			"https://localhost:5173",
+			"http://nexus-dc.me",
+			"http://www.nexus-dc.me",
+			"https://nexus-app.ondigitalocean.app",
+		},
+		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowHeaders:     []string{"Origin", "Content-Type", "Authorization"},
+		ExposeHeaders:    []string{"Content-Length"},
+		AllowCredentials: true,
 	}))
 
 	// route register with email verification
