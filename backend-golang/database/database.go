@@ -32,7 +32,7 @@ func InitDB() {
 
 	// Format DSN untuk MySQL
 	// Tambahan: parseTime=True penting untuk tanggal
-	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local&tls=true",
+	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local&tls=skip-verify",
 		dbUser, dbPass, dbHost, dbPort, dbName)
 
 	fmt.Printf("Connecting to DB: %s@%s:%s\n", dbUser, dbHost, dbPort) // Debug print
