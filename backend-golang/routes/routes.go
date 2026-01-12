@@ -14,12 +14,6 @@ func SetupRouter() *gin.Engine {
 	router := gin.Default()
 	router.Static("/public", "./public")
 
-	// Health check endpoints (must be before CORS for Kubernetes probes)
-	router.GET("/health", controllers.HealthCheck)
-	router.GET("/healthz", controllers.ReadinessCheck)  // Alias for readiness
-	router.GET("/ready", controllers.ReadinessCheck)    // Readiness probe
-	router.GET("/live", controllers.LivenessCheck)      // Liveness probe
-
 	// set up CORS
 	router.Use(cors.New(cors.Config{
 		AllowOrigins: []string{
