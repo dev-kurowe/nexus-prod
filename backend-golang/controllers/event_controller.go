@@ -429,7 +429,13 @@ func UpdateEvent(c *gin.Context) {
 		filename := uuid.New().String() + filepath.Ext(file.Filename)
 		savePath := filepath.Join("public", "images", filename)
 		c.SaveUploadedFile(file, savePath)
-		event.Banner = "http://localhost:8000/public/images/" + filename
+		baseURL := os.Getenv("APP_URL")
+		if baseURL == "" {
+			baseURL = "http://localhost:8000"
+		}
+		baseURL = strings.TrimRight(baseURL, "/")
+
+		event.Banner = fmt.Sprintf("%s/public/images/%s", baseURL, filename)
 	}
 
 	// 5. Simpan Perubahan

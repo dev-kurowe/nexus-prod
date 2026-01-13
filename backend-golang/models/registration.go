@@ -19,7 +19,7 @@ type Registration struct {
 	PaymentToken string    `json:"payment_token"` // Untuk Snap Token
 	PaymentURL   string    `json:"payment_url"`   // URL Redirect (Opsional)
 	OrderID      string    `json:"order_id"`      // Order ID dari Midtrans
-	PaidAt       time.Time `json:"paid_at"`       // Waktu pembayaran sukses
+	PaidAt       time.Time `*json:"paid_at"`      // Waktu pembayaran sukses
 
 	// Relasi
 	Event   Event        `json:"event" gorm:"foreignKey:EventID"`
